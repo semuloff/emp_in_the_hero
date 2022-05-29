@@ -4,8 +4,14 @@ from config import *
 
 
 
-url = "https://www.heroeswm.ru/home.php"
-driver = webdriver.Chrome(executable_path=webdriver_path)
+# options
+options = webdriver.ChromeOptions()
+options.add_argument(f"user-agent={user_agents['ID']}")
+
+driver = webdriver.Chrome(
+    executable_path=webdriver_path, 
+    options=options
+    )
 
 
 try:
