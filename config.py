@@ -1,0 +1,1 @@
+webdriver_path = "/home/semul/Desktop/HeroesWM_employment/chromedriver/driver"
