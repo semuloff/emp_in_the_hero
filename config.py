@@ -1,4 +1,4 @@
-# Path to webdrivee
+# Path to webdriver
 webdriver_path = "./chromedriver/driver"
 
 # key - ID; value - user-agent_pattern
