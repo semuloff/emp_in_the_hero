@@ -46,15 +46,15 @@ def autorization_process(flag=False) -> None:
             password = driver.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[2]/td[2]/input")
             password.clear()
             password.send_keys(data["ID"]["password"])
-            sleep(5)
+            sleep(20)
 
-            captcha = driver.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[4]/td/table/tbody/tr/td[1]/img")
-            code = detect_captcha(captcha)
-            sleep(5)
+            # captcha = driver.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[4]/td/table/tbody/tr/td[1]/img")
+            # code = detect_captcha(captcha)
+            # sleep(5)
 
-            input_code_form = driver.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[4]/td/table/tbody/tr/td[2]/input")
-            input_code_form.send_keys(code)
-            sleep(5)
+            # input_code_form = driver.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[4]/td/table/tbody/tr/td[2]/input")
+            # input_code_form.send_keys(code)
+            # sleep(5)
 
             log_in = driver.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[5]/td/input[1]")
             log_in.click()
@@ -104,7 +104,7 @@ def captcha_solution() -> None:
         getjob = driver.find_element_by_xpath('//*[@id="wbtn"]')
         getjob.click()
     except Exception as _ex:
-        print("[Can't find button]")
+        print("[You are employed]")
 
 
 if __name__ == "__main__":
@@ -116,5 +116,5 @@ if __name__ == "__main__":
         executable_path=webdriver_path, 
         options=options
         )
-
+        
     main()
