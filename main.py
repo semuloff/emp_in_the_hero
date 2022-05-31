@@ -9,11 +9,13 @@ from config import *
 # Account autorization
 def autorization() -> None:
     print(">> Autorization... ")
+
     autorization_process()
-    sleep(1)
-    
+    sleep(1)    
     if driver.current_url == urls["login"]:
         autorization_process(flag=True)
+
+    print(">> [Authorization failed!]" if driver.current_url == urls["login"] else ">> [Successful authorization!]")
 
 
 # Autorization function: if you need to enter captcha or without. flag = True -> captcha present, else -> no captcha
@@ -24,39 +26,33 @@ def autorization_process(flag=False) -> None:
             login = driver.find_element(By.CLASS_NAME, "inp_login")
             login.clear()
             login.send_keys(data["ID"]["login"])
-            sleep(1)
 
             password = driver.find_element(By.CLASS_NAME, "inp_pass")
             password.clear()
             password.send_keys(data["ID"]["password"])
-            sleep(1)
 
             log_in = driver.find_element(By.CLASS_NAME, "entergame")
             log_in.click()
+
         else:
             login = driver.find_element(By.XPATH, "/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[1]/td[2]/input")
             login.clear()
             login.send_keys(data["ID"]["login"])
-            sleep(1)
 
             password = driver.find_element(By.XPATH, "/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[2]/td[2]/input")
             password.clear()
             password.send_keys(data["ID"]["password"])
-            sleep(1)
 
             # EDIT
             # captcha = driver.find_element(By.XPATH, "/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[4]/td/table/tbody/tr/td[1]/img")
             # code = captcha_solution(src_link=, flag=True)
-            # sleep(5)
 
             # input_code_form = driver.find_element(By.XPATH, "/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[4]/td/table/tbody/tr/td[2]/input")
             # input_code_form.send_keys(code)
-            # sleep(5)
 
             log_in = driver.find_element(By.XPATH, "/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[5]/td/input[1]")
             log_in.click()
             
-        print(">> [Successful authorization!]")
     except Exception as _ex:
         print(">> [Autorization error]: {_ex}")
 
