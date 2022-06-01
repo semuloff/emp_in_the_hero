@@ -6,22 +6,10 @@ from config import *
 
 
 
-# Account autorization
-def autorization() -> None:
-    print(">> Autorization... ")
-
-    autorization_process()
-    sleep(1)    
-    if driver.current_url == urls["login"]:
-        autorization_process(flag=True)
-
-    print(">> [Authorization failed!]" if driver.current_url == urls["login"] else ">> [Successful authorization!]")
-
-
-# Autorization function: if you need to enter captcha or without. flag = True -> captcha present, else -> no captcha
-def autorization_process(flag=False) -> None: 
+# Account autorization. Autorization function: if you need to enter captcha or without. captha = True -> captcha present, else -> no captcha
+def autorization(captcha=False) -> None: 
     try:
-        if flag == False:
+        if captcha == False:
             driver.get(url=urls["main"])
             login = driver.find_element(By.CLASS_NAME, "inp_login")
             login.clear()
@@ -42,7 +30,7 @@ def autorization_process(flag=False) -> None:
             password = driver.find_element(By.XPATH, "/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[2]/td[2]/input")
             password.clear()
             password.send_keys(data["ID"]["password"])
-
+            sleep(10)
             # EDIT
             # captcha = driver.find_element(By.XPATH, "/html/body/center/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[4]/td/table/tbody/tr/td[1]/img")
             # code = captcha_solution(src_link=, flag=True)
@@ -54,12 +42,12 @@ def autorization_process(flag=False) -> None:
             log_in.click()
             
     except Exception as _ex:
-        print(">> [Autorization error]: {_ex}")
+        print("[Error]: {_ex}")
 
 
-# Captcha solution: flag = True -> captcha present, else -> there is only a button
-def captcha_solution(src_link=None, flag=True) -> Union[str, None]:
-    if flag == True:
+# Captcha solution: captcha = True -> captcha present, else -> there is only a button
+def captcha_solution(src_link=None, captcha=True) -> Union[str, None]:
+    if captcha == True:
         pass
     else:
         try:
@@ -69,7 +57,7 @@ def captcha_solution(src_link=None, flag=True) -> Union[str, None]:
             print("[Are you employed]")
 
 
-# character employment
+# hero employment
 def employ() -> None:
     print(">> Employment... ")
 
@@ -84,13 +72,13 @@ def employ() -> None:
             concern_link.click()
             # check: is there a captcha?
             # EDIT
-            captcha_solution(flag=False) 
+            captcha_solution(captha=False) 
             print(">> [Successful employment!]")
 
             if "object-info" in driver.current_url:
                 break
         except Exception as _ex:
-            print("[No free work]")
+            print("[No free work] ", structure)
 
 
 # Defines a unique coordinate for a character based on its location
@@ -100,10 +88,20 @@ def determination_current_district() -> str:
 
 
 def main() -> None:
-    try:
-        autorization()
-        sleep(5)
-        employ()
+    try:    
+        print(">> Autorization... ")
+        autorization()   
+        if driver.current_url != urls["login"]:
+            print(">> [Successful authorization!]")
+        else:
+            autorization(captcha=True)
+            if driver.current_url == urls["login"]:
+                print(">> [Authorization failed!]")
+            else:
+                print(">> [Successful authorization!]")
+
+
+
     except Exception as _ex:
         print(f'[Error!] {_ex}')
     finally:
